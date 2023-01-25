@@ -8,10 +8,21 @@ def text_indentation(text):
     """
     Prints input text with 2 new lines after our edgecases
     """
-    if not isinstance(text, str):
+    if (type(text) is not str or text is None):
         raise TypeError("text must be a string")
-    for i in text:
-        print(i, end='')
-        if i in ".?:":
-            print("\n" * 2)
-    print("")
+    flag = 0
+    for c in text:
+        if (c == '.' or c == '?' or c == ':'):
+            print(c, end='')
+            print('')
+            print('')
+            flag = 1
+        else:
+            if (flag == 0):
+                print(c, end='')
+            else:
+                if (c == ' ' or c == '\t'):
+                    pass
+                else:
+                    print(c, end="")
+                    flag = 0
