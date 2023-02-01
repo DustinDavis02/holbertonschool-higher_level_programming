@@ -1,6 +1,5 @@
 #!/usr/bin/python3
 """inherits the rectangle class to make a square class (equal sides)"""
-
 Rectangle = __import__('9-rectangle').Rectangle
 
 
