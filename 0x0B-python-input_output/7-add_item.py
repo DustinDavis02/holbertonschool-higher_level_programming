@@ -1,18 +1,17 @@
 #!/usr/bin/python3
-"""
-Load, add and save date to a file
-"""
+"""Load, add and save date to a file"""
 
 
-import sys
 load_from_json_file = __import__('6-load_from_json_file').load_from_json_file
 save_to_json_file = __import__('5-save_to_json_file').save_to_json_file
+from sys import argv 
 
-filename = "add_item.json"
+args = argv[1:]
 try:
-    _list = load_from_json_file(filename)
+    my_obj = load_from_json_file("add_item.json")
 except FileNotFoundError:
-    _list = []
-for i in range(1, len(sys.argv)):
-    _list.append(sys.argv[i])
-save_to_json_file(_list, filename)
+    objs = args
+else:
+    objs = my_obj + args
+finally:
+    save_to_json_file(objs, "add_item.json")
