@@ -1,0 +1,4 @@
+# 7-base_geometry.txt
+----------------------
+
+base_geometry defines a empty geomtry class.
