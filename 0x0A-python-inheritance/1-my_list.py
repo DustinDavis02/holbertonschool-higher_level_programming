@@ -1,17 +1,14 @@
 #!/usr/bin/python3
-"""
-MyList
-"""
+"""This contains class MyList"""
 
 
 class MyList(list):
-    """
-    list
-    """
+    """custom class called list, inherited from built-in list class."""
 
     def print_sorted(self):
-        """
-        Prints sorted format
-        """
+        """Prints sorted format"""
 
-        print(sorted(self))
+        new_list = self.copy()
+        sorted_list = sorted(new_list)
+        print(sorted_list)
+        return sorted_list
