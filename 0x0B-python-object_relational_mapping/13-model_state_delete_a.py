@@ -1,28 +1,34 @@
 #!/usr/bin/python3
 """Delete all states."""
 
-from sqlalchemy import create_engine
-from sqlalchemy.orm import Session
-from sys import argv
 from model_state import Base, State
+from sys import argv
+from sqlalchemy import (create_engine)
+from sqlalchemy.orm import sessionmaker
 
 
-def delete_state():
-    """deletes all State with a name containing letter 'a' from the database hbtn_0e_6_usa"""
-    engine = create_engine('mysql+mysqldb://{}:{}@localhost/{}'
-                           .format(argv[1], argv[2], argv[3]),
-                           pool_pre_ping=True)
+def main():
+    mysql_username = argv[1]
+    mysql_password = argv[2]
+    database_name = argv[3]
+
+    db = ("mysql+mysqldb://{}:{}@localhost:3306/{}".format(
+        mysql_username, mysql_password, database_name))
+
+    engine = create_engine(db, pool_pre_ping=True)
     Base.metadata.create_all(engine)
-    session = Session(engine)
 
-    state = session.query(State)
-    for row in state:
-        if 'a' in row.name:
-            session.delete(row)
+    session = sessionmaker(bind=engine)
+    Session = session()
 
-    session.commit()
-    session.close()
+    states = Session.query(State).filter(State.name.contains("a"))
+    for state in states:
+        Session.delete(state)
+
+    Session.commit()
+
+    Session.close()
 
 
 if __name__ == "__main__":
-    delete_state()
+    main()
