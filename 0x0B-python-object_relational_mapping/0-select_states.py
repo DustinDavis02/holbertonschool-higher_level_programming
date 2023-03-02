@@ -1,10 +1,11 @@
+#!/usr/bin/python3
 """Lists all states from the database hbtn_0e_0_usa"""
 import MySQLdb
 from sys import argv
 
 
 def list_states():
-    """Takes argument to list states"""
+    """Take arguments to list states in ascending order"""
     db = MySQLdb.connect(host="localhost",
                          port=3306,
                          user=argv[1],
