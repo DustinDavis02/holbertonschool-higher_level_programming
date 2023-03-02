@@ -2,29 +2,29 @@
 """Lists all states from the database hbtn_0e_0_usa"""
 
 import MySQLdb
-import sys
 from sys import argv
 
-if __name__ == "__main__":
 
-    mysql_user = sys.argv[1]
-    mysql_password = sys.argv[2]
-    database_name = sys.argv[3]
-    state_name = sys.argv[4]
+def my_filter_states():
+    """takes in an argument and displays all values in the states table of
+    hbtn_0e_0_usa where name matches the argument
+    but is safe from sql injections."""
 
     db = MySQLdb.connect(host="localhost",
-        user=argv[1],
-        passwd=argv[2],
-        db=argv[3],
-        port=3306)
+                         port=3306,
+                         user=argv[1],
+                         passwd=argv[2],
+                         db=argv[3])
 
     cur = db.cursor()
+    cur.execute("SELECT * FROM states WHERE name=%s ORDER BY id", (argv[4], ))
+    query_rows = cur.fetchall()
 
-    cur.execute("SELECT * FROM states WHERE name LIKE %s ORDER BY id")
-
-    rows = cur.fetchall()
-    for row in rows:
+    for row in query_rows:
         print(row)
-
     cur.close()
     db.close()
+
+
+if __name__ == "__main__":
+    my_filter_states()
