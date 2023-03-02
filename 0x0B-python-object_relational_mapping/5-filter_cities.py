@@ -1,29 +1,15 @@
 #!/usr/bin/python3
 """Takes state and lists all cities of that state."""
+import sys
 import MySQLdb
-from sys import argv
-
-
-def all_cities_by_state():
-    """Takes in the name of state and lists cities of that state, with the database hbtn_0e_4_usa"""
-    db = MySQLdb.connect(host="localhost",
-                         port=3306,
-                         user=argv[1],
-                         passwd=argv[2],
-                         db=argv[3])
-
-    cur = db.cursor()
-    cur.execute("SELECT cities.name "
-                "FROM cities JOIN states ON cities.state_id = states.id "
-                "WHERE states.name = %s "
-                "ORDER BY cities.id", (argv[4], ))
-    query_rows = cur.fetchall()
-
-    for row in query_rows:
-        print("{}, ".format(row[0]), end="")
-    cur.close()
-    db.close()
-
 
 if __name__ == "__main__":
-    all_cities_by_state()
+    db = MySQLdb.connect(user=sys.argv[1], passwd=sys.argv[2], db=sys.argv[3])
+    cur = db.cursor()
+    cur.execute("SELECT * \
+                FROM cities \
+                INNER JOIN states \
+                ON cities.state_id = states.id \
+                ORDER BY cities.id")
+    cit_lst = [city[2] for city in cur.fetchall() if city[4] == sys.argv[4]]
+    print(", ".join(cit_lst))
