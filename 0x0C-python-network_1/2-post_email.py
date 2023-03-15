@@ -1,15 +1,15 @@
 #!/usr/bin/python3
-"""A Python script that sends a request to a URL and displays the body of the response"""
+"""A Python script that sends a POST request to a URL with an email parameter"""
 
+import urllib.parse
 import urllib.request
-import urllib.error
 import sys
 
 if __name__ == "__main__":
     url = sys.argv[1]
-    try:
-        with urllib.request.urlopen(url) as response:
-            body = response.read()
-            print(body.decode('utf-8'))
-    except urllib.error.HTTPError as e:
-        print("Error code: {}".format(e.code))
+    email = sys.argv[2]
+    data = urllib.parse.urlencode({'email': email}).encode('ascii')
+    req = urllib.request.Request(url, data)
+    with urllib.request.urlopen(req) as response:
+        body = response.read()
+        print(body.decode('utf-8'))
