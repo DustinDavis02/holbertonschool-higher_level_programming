@@ -1,15 +1,10 @@
 #!/usr/bin/python3
-"""A Python script that sends a POST request to a URL with an email parameter"""
-
-import urllib.parse
+"""This script takes in a URL and sends a request to display the value of request id value."""
 import urllib.request
 import sys
 
 if __name__ == "__main__":
     url = sys.argv[1]
-    email = sys.argv[2]
-    data = urllib.parse.urlencode({'email': email}).encode('ascii')
-    req = urllib.request.Request(url, data)
+    req = urllib.request.Request(url)
     with urllib.request.urlopen(req) as response:
-        body = response.read()
-        print(body.decode('utf-8'))
+        print(response.info().get('X-Request-Id'))
