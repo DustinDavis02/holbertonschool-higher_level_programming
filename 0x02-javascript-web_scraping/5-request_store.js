@@ -16,6 +16,6 @@ request(url, (error, response, body) => {
       console.error(err);
       return;
     }
-    console.log(`Successfully saved response body to ${filePath}`);
+    console.log();
   });
 });
